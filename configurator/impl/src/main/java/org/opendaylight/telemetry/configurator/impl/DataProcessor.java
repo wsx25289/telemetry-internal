@@ -15,43 +15,79 @@ import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.controller.md.sal.common.api.data.ReadFailedException;
 import org.opendaylight.controller.md.sal.common.api.data.TransactionCommitFailedException;
+import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.TelemetrySystem;
+import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.TelemetrySystemBuilder;
 import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.sensor.paths.TelemetrySensorPaths;
 import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.sensor.specification.TelemetrySensorGroup;
-import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.TelemetrySystem;
-import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.TelemetrySystemBuilder;
-import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.*;
-import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.DestinationGroups;
-import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.DestinationGroupsBuilder;
-import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.destination.groups.DestinationGroup;
-import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.destination.groups.DestinationGroupBuilder;
-import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.destination.groups.DestinationGroupKey;
-import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.destination.groups.destination.group.Destinations;
-import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.destination.groups.destination.group.DestinationsBuilder;
-import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.destination.groups.destination.group.destinations.Destination;
-import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.destination.groups.destination.group.destinations.DestinationBuilder;
-import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.destination.groups.destination.group.destinations.DestinationKey;
-import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.sensor.groups.SensorGroup;
-import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.sensor.groups.SensorGroupBuilder;
-import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.sensor.groups.SensorGroupKey;
-import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.sensor.groups.sensor.group.SensorPaths;
-import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.sensor.groups.sensor.group.SensorPathsBuilder;
-import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.sensor.groups.sensor.group.sensor.paths.SensorPath;
-import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.sensor.groups.sensor.group.sensor.paths.SensorPathBuilder;
-import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.sensor.groups.sensor.group.sensor.paths.SensorPathKey;
-import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.sensor.groups.sensor.group.sensor.paths.sensor.path.ConfigBuilder;
-import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.subscriptions.PersistentBuilder;
-import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.subscriptions.persistent.Subscription;
-import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.subscriptions.persistent.SubscriptionBuilder;
-import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.subscriptions.persistent.SubscriptionKey;
-import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.subscriptions.persistent.subscription.*;
-import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.subscriptions.persistent.subscription.Config;
+//import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.TelemetrySystem;
+//import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.TelemetrySystemBuilder;
+//import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.*;
+//import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.DestinationGroups;
+//import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.DestinationGroupsBuilder;
+//import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.destination.groups.DestinationGroup;
+//import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.destination.groups.DestinationGroupBuilder;
+//import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.destination.groups.DestinationGroupKey;
+//import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.destination.groups.destination.group.Destinations;
+//import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.destination.groups.destination.group.DestinationsBuilder;
+//import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.destination.groups.destination.group.destinations.Destination;
+//import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.destination.groups.destination.group.destinations.DestinationBuilder;
+//import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.destination.groups.destination.group.destinations.DestinationKey;
+//import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.sensor.groups.SensorGroup;
+//import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.sensor.groups.SensorGroupBuilder;
+//import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.sensor.groups.SensorGroupKey;
+//import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.sensor.groups.sensor.group.SensorPaths;
+//import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.sensor.groups.sensor.group.SensorPathsBuilder;
+//import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.sensor.groups.sensor.group.sensor.paths.SensorPath;
+//import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.sensor.groups.sensor.group.sensor.paths.SensorPathBuilder;
+//import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.sensor.groups.sensor.group.sensor.paths.SensorPathKey;
+//import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.sensor.groups.sensor.group.sensor.paths.sensor.path.ConfigBuilder;
+//import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.subscriptions.PersistentBuilder;
+//import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.subscriptions.persistent.Subscription;
+//import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.subscriptions.persistent.SubscriptionBuilder;
+//import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.subscriptions.persistent.SubscriptionKey;
+//import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.subscriptions.persistent.subscription.*;
+//import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.subscriptions.persistent.subscription.Config;
 //import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.subscriptions.persistent.subscription.ConfigBuilder;
-import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.subscriptions.persistent.subscription.sensor.profiles.SensorProfile;
-import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.subscriptions.persistent.subscription.sensor.profiles.SensorProfileBuilder;
-import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.subscriptions.persistent.subscription.sensor.profiles.SensorProfileKey;
-import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.subscriptions.persistent.subscription.sensor.profiles.sensor.profile.*;
+//import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.subscriptions.persistent.subscription.sensor.profiles.SensorProfile;
+//import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.subscriptions.persistent.subscription.sensor.profiles.SensorProfileBuilder;
+//import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.subscriptions.persistent.subscription.sensor.profiles.SensorProfileKey;
+//import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.subscriptions.persistent.subscription.sensor.profiles.sensor.profile.*;
+import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.system.DestinationGroups;
+import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.system.DestinationGroupsBuilder;
+import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.system.SensorGroups;
+import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.system.SensorGroupsBuilder;
+import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.system.Subscriptions;
+import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.system.SubscriptionsBuilder;
+import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.system.destination.groups.DestinationGroup;
+import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.system.destination.groups.DestinationGroupBuilder;
+import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.system.destination.groups.DestinationGroupKey;
+import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.system.destination.groups.destination.group.Destinations;
+import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.system.destination.groups.destination.group.DestinationsBuilder;
+import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.system.destination.groups.destination.group.destinations.Destination;
+import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.system.destination.groups.destination.group.destinations.DestinationBuilder;
+import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.system.destination.groups.destination.group.destinations.DestinationKey;
+import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.system.sensor.groups.SensorGroup;
+import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.system.sensor.groups.SensorGroupBuilder;
+import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.system.sensor.groups.SensorGroupKey;
+import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.system.sensor.groups.sensor.group.SensorPaths;
+import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.system.sensor.groups.sensor.group.SensorPathsBuilder;
+import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.system.sensor.groups.sensor.group.sensor.paths.SensorPath;
+import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.system.sensor.groups.sensor.group.sensor.paths.SensorPathBuilder;
+import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.system.sensor.groups.sensor.group.sensor.paths.SensorPathKey;
+import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.system.subscriptions.PersistentBuilder;
+import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.system.subscriptions.persistent.Subscription;
+import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.system.subscriptions.persistent.SubscriptionBuilder;
+import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.system.subscriptions.persistent.SubscriptionKey;
+import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.system.subscriptions.persistent.subscription.Config;
+import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.system.subscriptions.persistent.subscription.ConfigBuilder;
+import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.system.subscriptions.persistent.subscription.SensorProfiles;
+import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.system.subscriptions.persistent.subscription.SensorProfilesBuilder;
+import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.system.subscriptions.persistent.subscription.sensor.profiles.SensorProfile;
+import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.system.subscriptions.persistent.subscription.sensor.profiles.SensorProfileBuilder;
+import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.system.subscriptions.persistent.subscription.sensor.profiles.SensorProfileKey;
 import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.types.rev170824.*;
 import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.types.inet.rev170824.Dscp;
+import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.types.inet.rev170824.IpAddress;
 import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.types.inet.rev170824.Ipv4Address;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.telemetry.params.xml.ns.yang.configurator.api.rev171120.delete.telemetry.destination.input.TelemetryDestination;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.telemetry.params.xml.ns.yang.configurator.api.rev171120.delete.telemetry.sensor.input.TelemetrySensor;
@@ -362,8 +398,9 @@ public class DataProcessor {
         List<Destination> destinationList = new ArrayList<>();
         for (DestinationProfile destinationProfile : list) {
             DestinationBuilder destinationBuilder = new DestinationBuilder();
-            destinationBuilder.setKey(new DestinationKey(destinationProfile.getDestinationAddress(), destinationProfile.getDestinationPort()));
-            destinationBuilder.setDestinationAddress(destinationProfile.getDestinationAddress());
+            destinationBuilder.setKey(new DestinationKey(new IpAddress(destinationProfile.getDestinationAddress()),
+                    destinationProfile.getDestinationPort()));
+            destinationBuilder.setDestinationAddress(new IpAddress(destinationProfile.getDestinationAddress()));
             destinationBuilder.setDestinationPort(destinationProfile.getDestinationPort());
             destinationList.add(destinationBuilder.build());
         }
@@ -379,9 +416,7 @@ public class DataProcessor {
             SubscriptionBuilder subscriptionBuilder = new SubscriptionBuilder();
             subscriptionBuilder.setKey(new SubscriptionKey(telemetrySubscription.getSubscriptionName()));
             subscriptionBuilder.setSubscriptionName(telemetrySubscription.getSubscriptionName());
-            subscriptionBuilder.setConfig(convertLeafParamsOfSubscription(telemetrySubscription.getSubscriptionName(),
-                    telemetrySubscription.getLocalSourceAddress(), telemetrySubscription.getOriginatedQosMarking(),
-                    telemetrySubscription.getProtocolType(), telemetrySubscription.getEncodingType()));
+            subscriptionBuilder.setConfig(convertLeafParamsOfSubscription(telemetrySubscription.getLocalSourceAddress()));
             subscriptionBuilder.setSensorProfiles(convertSensorProfiles(telemetrySubscription.getTelemetrySensor()));
             subscriptionBuilder.setDestinationGroups(convertDestinationGroups(telemetrySubscription.getTelemetryDestination()));
             subscriptionList.add(subscriptionBuilder.build());
@@ -393,42 +428,38 @@ public class DataProcessor {
         return subscriptionsBuilder.build();
     }
 
-    private Config convertLeafParamsOfSubscription(String name, Ipv4Address address, Dscp qos,
-                                                   String protocolType, String encodingtype) {
-        org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system
-                .subscriptions.persistent.subscription.ConfigBuilder builder = new org.opendaylight.yang.gen.v1
-                .http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system.subscriptions
-                .persistent.subscription.ConfigBuilder();
-        builder.setSubscriptionName(name);
-        builder.setLocalSourceAddress(address);
-        if (null == qos) {
-            builder.setOriginatedQosMarking(null);
-        }
-        builder.setOriginatedQosMarking(qos);
+    private Config convertLeafParamsOfSubscription(Ipv4Address address) {
+        ConfigBuilder builder = new ConfigBuilder();
+        //builder.setSubscriptionName(name);
+        builder.setLocalSourceAddress(new IpAddress(address));
+//        if (null == qos) {
+//            builder.setOriginatedQosMarking(null);
+//        }
+//        builder.setOriginatedQosMarking(qos);
 
-        if (null == protocolType) {
-            builder.setProtocol(STREAMGRPC.class);
-        } else {
-            if (protocolType.equals("STREAM_SSH")) {
-                builder.setProtocol(STREAMSSH.class);
-            } else if (protocolType.equals("STREAM_WEBSOCKET_RPC")) {
-                builder.setProtocol(STREAMWEBSOCKETRPC.class);
-            } else if (protocolType.equals("STREAM_JSON_RPC")) {
-                builder.setProtocol(STREAMJSONRPC.class);
-            } else {
-                builder.setProtocol(STREAMTHRIFTRPC.class);
-            }
-        }
-
-        if (null == encodingtype) {
-            builder.setEncoding(ENCPROTO3.class);
-        } else {
-            if (encodingtype.equals("ENC_XML")) {
-                builder.setEncoding(ENCXML.class);
-            } else {
-                builder.setEncoding(ENCJSONIETF.class);
-            }
-        }
+//        if (null == protocolType) {
+//            builder.setProtocol(STREAMGRPC.class);
+//        } else {
+//            if (protocolType.equals("STREAM_SSH")) {
+//                builder.setProtocol(STREAMSSH.class);
+//            } else if (protocolType.equals("STREAM_WEBSOCKET_RPC")) {
+//                builder.setProtocol(STREAMWEBSOCKETRPC.class);
+//            } else if (protocolType.equals("STREAM_JSON_RPC")) {
+//                builder.setProtocol(STREAMJSONRPC.class);
+//            } else {
+//                builder.setProtocol(STREAMTHRIFTRPC.class);
+//            }
+//        }
+//
+//        if (null == encodingtype) {
+//            builder.setEncoding(ENCPROTO3.class);
+//        } else {
+//            if (encodingtype.equals("ENC_XML")) {
+//                builder.setEncoding(ENCXML.class);
+//            } else {
+//                builder.setEncoding(ENCJSONIETF.class);
+//            }
+//        }
 
         return builder.build();
     }
@@ -441,9 +472,7 @@ public class DataProcessor {
             SensorProfileBuilder sensorProfileBuilder = new SensorProfileBuilder();
             sensorProfileBuilder.setKey(new SensorProfileKey(list.get(i).getSensorGroupId()));
             sensorProfileBuilder.setSensorGroup(list.get(i).getSensorGroupId());
-            sensorProfileBuilder.setConfig(convertSensorProfilesConfig(list.get(i).getSensorGroupId(),
-                    list.get(i).getSampleInterval(), list.get(i).getHeartbeatInterval(),
-                    list.get(i).isSuppressRedundant()));
+            sensorProfileBuilder.setConfig(convertSensorProfilesConfig(list.get(i).getSampleInterval()));
             sensorProfileList.add(sensorProfileBuilder.build());
         }
         SensorProfilesBuilder builder = new SensorProfilesBuilder();
@@ -451,61 +480,59 @@ public class DataProcessor {
         return builder.build();
     }
 
-    private org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system
+    private org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.system
             .subscriptions.persistent.subscription.sensor.profiles.sensor.profile.Config convertSensorProfilesConfig(
-            String id, BigInteger sam, BigInteger hea, Boolean sup) {
+            BigInteger sam) {
         org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824
-                .telemetry.top.telemetry.system.subscriptions.persistent.subscription.sensor.profiles.sensor.profile
+                .telemetry.system.subscriptions.persistent.subscription.sensor.profiles.sensor.profile
                 .ConfigBuilder builder = new org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824
-                .telemetry.top.telemetry.system.subscriptions.persistent.subscription.sensor.profiles.sensor.profile
+                .telemetry.system.subscriptions.persistent.subscription.sensor.profiles.sensor.profile
                 .ConfigBuilder();
-        if (null == id) {
-            builder.setSensorGroup(null);
-        } else {
-            builder.setSensorGroup(id);
-        }
-
-        if (null == hea) {
-            builder.setHeartbeatInterval(null);
-        } else {
-            builder.setHeartbeatInterval(hea);
-        }
-
-        if (null == sup) {
-            builder.setSuppressRedundant(null);
-        } else {
-            builder.setSuppressRedundant(sup);
-        }
+//        if (null == id) {
+//            builder.setSensorGroup(null);
+//        } else {
+//            builder.setSensorGroup(id);
+//        }
+//
+//        if (null == hea) {
+//            builder.setHeartbeatInterval(null);
+//        } else {
+//            builder.setHeartbeatInterval(hea);
+//        }
+//
+//        if (null == sup) {
+//            builder.setSuppressRedundant(null);
+//        } else {
+//            builder.setSuppressRedundant(sup);
+//        }
 
         builder.setSampleInterval(sam);
 
         return builder.build();
     }
 
-    private org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system
-            .subscriptions.persistent.subscription.DestinationGroups convertDestinationGroups(List<org.opendaylight
-            .yang.gen.v1.urn.opendaylight.telemetry.params.xml.ns.yang.configurator.rev171120.telemetry.subscription
-            .specification.telemetry.subscription.TelemetryDestination> list) {
-        List<org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system
-                .subscriptions.persistent.subscription.destination.groups.DestinationGroup> destinationGroupList =
-                new ArrayList<>();
+    private org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.system.subscriptions
+            .persistent.subscription.DestinationGroups convertDestinationGroups(List<org.opendaylight.yang.gen.v1.urn
+            .opendaylight.telemetry.params.xml.ns.yang.configurator.rev171120.telemetry.subscription.specification
+            .telemetry.subscription.TelemetryDestination> list) {
+        List<org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.system.subscriptions
+                .persistent.subscription.destination.groups.DestinationGroup> destinationGroupList = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
-            org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system
-                    .subscriptions.persistent.subscription.destination.groups.DestinationGroupBuilder
-                    destinationGroupBuilder = new org.opendaylight.yang.gen.v1.http.openconfig.net.yang
-                    .telemetry.rev170824.telemetry.top.telemetry.system.subscriptions.persistent
-                    .subscription.destination.groups.DestinationGroupBuilder();
+            org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.system.subscriptions
+                    .persistent.subscription.destination.groups.DestinationGroupBuilder destinationGroupBuilder = new
+                    org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.system
+                            .subscriptions.persistent.subscription.destination.groups.DestinationGroupBuilder();
             destinationGroupBuilder.setKey(new org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry
-                    .rev170824.telemetry.top.telemetry.system.subscriptions.persistent.subscription.destination
-                    .groups.DestinationGroupKey(list.get(i).getDestinationGroupId()));
+                    .rev170824.telemetry.system.subscriptions.persistent.subscription.destination.groups
+                    .DestinationGroupKey(list.get(i).getDestinationGroupId()));
             destinationGroupBuilder.setGroupId(list.get(i).getDestinationGroupId());
             //destinationGroupBuilder.setConfig();
             destinationGroupList.add(destinationGroupBuilder.build());
         }
-        org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system
-                .subscriptions.persistent.subscription.DestinationGroupsBuilder builder = new org.opendaylight
-                .yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.top.telemetry.system
-                .subscriptions.persistent.subscription.DestinationGroupsBuilder();
+        org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.rev170824.telemetry.system.subscriptions
+                .persistent.subscription.DestinationGroupsBuilder builder = new org.opendaylight.yang.gen.v1.http
+                .openconfig.net.yang.telemetry.rev170824.telemetry.system.subscriptions.persistent.subscription
+                .DestinationGroupsBuilder();
         builder.setDestinationGroup(destinationGroupList);
         return builder.build();
     }
