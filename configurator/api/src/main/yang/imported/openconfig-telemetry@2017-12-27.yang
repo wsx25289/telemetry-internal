@@ -55,46 +55,22 @@ module openconfig-telemetry {
   }
 
   grouping telemetry-local-source-address-config {
-      leaf local-source-address {
-        type oc-inet:ipv4-address;
-      }
-  }
-
-  grouping telemetry-qos-marking-config {
-          leaf originated-qos-marking {
-            type oc-inet:dscp;
-          }
+         leaf local-source-address {
+             type oc-inet:ipv4-address;
+         }
   }
 
   grouping telemetry-sensor-group-config {
-            leaf sensor-group-id {
-              type string;
-            }
+         leaf sensor-group-id {
+             type string;
+         }
   }
 
   grouping telemetry-stream-subscription-config {
-      uses telemetry-stream-frequency-config;
-      uses telemetry-heartbeat-config;
-      uses telemetry-suppress-redundant-config;
+         leaf sample-interval {
+             type uint64;
+         }
 
-  }
-
-  grouping telemetry-stream-frequency-config {
-      leaf sample-interval {
-        type uint64;
-      }
-  }
-
-  grouping telemetry-heartbeat-config {
-      leaf heartbeat-interval {
-        type uint64;
-      }
-  }
-
-  grouping telemetry-suppress-redundant-config {
-      leaf suppress-redundant {
-        type boolean;
-      }
   }
 
   grouping telemetry-stream-destination-config {
@@ -126,12 +102,9 @@ module openconfig-telemetry {
         leaf telemetry-sensor-path {
           type string;
         }
-        // This may not be needed. Decide on removal.
-        leaf sensor-exclude-filter {
-          type string;
-        }
+
       }
-    }
+  }
 
 
 
