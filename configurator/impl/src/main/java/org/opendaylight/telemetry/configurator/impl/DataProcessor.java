@@ -109,8 +109,6 @@ public class DataProcessor {
 
     private static final Logger LOG = LoggerFactory.getLogger(DataProcessor.class);
 
-
-
     private final DataBroker dataBroker;
 
     public DataProcessor(DataBroker dataBroker) {
