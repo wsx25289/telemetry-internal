@@ -18,6 +18,12 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.telemetry.params.xml.ns.yan
 import org.opendaylight.yang.gen.v1.urn.opendaylight.telemetry.params.xml.ns.yang.configurator.rev171120.telemetry.destination.specification.TelemetryDestinationGroupKey;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.telemetry.params.xml.ns.yang.configurator.rev171120.telemetry.node.subscription.TelemetryNode;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.telemetry.params.xml.ns.yang.configurator.rev171120.telemetry.node.subscription.TelemetryNodeKey;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.telemetry.params.xml.ns.yang.configurator.rev171120.telemetry.subscription.specification.TelemetrySubscription;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.telemetry.params.xml.ns.yang.configurator.rev171120.telemetry.subscription.specification.TelemetrySubscriptionKey;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.telemetry.params.xml.ns.yang.configurator.rev171120.telemetry.subscription.specification.telemetry.subscription.TelemetryDestination;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.telemetry.params.xml.ns.yang.configurator.rev171120.telemetry.subscription.specification.telemetry.subscription.TelemetryDestinationKey;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.telemetry.params.xml.ns.yang.configurator.rev171120.telemetry.subscription.specification.telemetry.subscription.TelemetrySensor;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.telemetry.params.xml.ns.yang.configurator.rev171120.telemetry.subscription.specification.telemetry.subscription.TelemetrySensorKey;
 import org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network.topology.rev131021.NetworkTopology;
 import org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network.topology.rev131021.TopologyId;
 import org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network.topology.rev131021.network.topology.Topology;
@@ -47,5 +53,22 @@ public class IidConstants {
 
     public static final InstanceIdentifier<TelemetryNode> getNodeGroupPath(String nodeGroupId) {
         return InstanceIdentifier.create(Telemetry.class).child(TelemetryNode.class, new TelemetryNodeKey(nodeGroupId));
+    }
+
+    public static final InstanceIdentifier<TelemetrySubscription> getSubscriptionPath(String nodeId, String name) {
+        return InstanceIdentifier.create(Telemetry.class).child(TelemetryNode.class, new TelemetryNodeKey(nodeId))
+                .child(TelemetrySubscription.class, new TelemetrySubscriptionKey(name));
+    }
+
+    public static final InstanceIdentifier<TelemetrySensor> getSubscriptionSensorPath(String nodeId, String name, String sensorId) {
+        return InstanceIdentifier.create(Telemetry.class).child(TelemetryNode.class, new TelemetryNodeKey(nodeId))
+                .child(TelemetrySubscription.class, new TelemetrySubscriptionKey(name))
+                .child(TelemetrySensor.class, new TelemetrySensorKey(sensorId));
+    }
+
+    public static final InstanceIdentifier<TelemetryDestination> getSubscriptionDestinationPath(String nodeId, String name, String destinationId) {
+        return InstanceIdentifier.create(Telemetry.class).child(TelemetryNode.class, new TelemetryNodeKey(nodeId))
+                .child(TelemetrySubscription.class, new TelemetrySubscriptionKey(name))
+                .child(TelemetryDestination.class, new TelemetryDestinationKey(destinationId));
     }
 }

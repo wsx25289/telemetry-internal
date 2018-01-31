@@ -89,6 +89,9 @@ import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.telemetry.types.rev
 import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.types.inet.rev170824.Dscp;
 import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.types.inet.rev170824.IpAddress;
 import org.opendaylight.yang.gen.v1.http.openconfig.net.yang.types.inet.rev170824.Ipv4Address;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.telemetry.params.xml.ns.yang.configurator.api.rev171120.delete.node.telemetry.subscription.destination.input.telemetry.node.telemetry.node.subscription.TelemetryNodeSubscriptionDestination;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.telemetry.params.xml.ns.yang.configurator.api.rev171120.delete.node.telemetry.subscription.input.telemetry.node.TelemetryNodeSubscription;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.telemetry.params.xml.ns.yang.configurator.api.rev171120.delete.node.telemetry.subscription.sensor.input.telemetry.node.telemetry.node.subscription.TelemetryNodeSubscriptionSensor;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.telemetry.params.xml.ns.yang.configurator.api.rev171120.delete.telemetry.destination.input.TelemetryDestination;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.telemetry.params.xml.ns.yang.configurator.api.rev171120.delete.telemetry.sensor.input.TelemetrySensor;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.telemetry.params.xml.ns.yang.configurator.rev171120.Telemetry;
@@ -233,16 +236,26 @@ public class DataProcessor {
         }
     }
 
-    public void deleteNodeSubscriptionFromDataStore(List<org.opendaylight.yang.gen.v1.urn.opendaylight.telemetry.params
-            .xml.ns.yang.configurator.api.rev171120.delete.node.telemetry.subscription.input.TelemetryNode> nodeList,
-                                                    List<TelemetryNode> nodeGroupList) {
-        for (org.opendaylight.yang.gen.v1.urn.opendaylight.telemetry.params.xml.ns.yang.configurator.api.rev171120
-                .delete.node.telemetry.subscription.input.TelemetryNode telemetryNode : nodeList) {
-            for (TelemetryNode telemetryNodeGroup : nodeGroupList) {
-                if (telemetryNode.getNodeId().equals(telemetryNodeGroup.getNodeId())) {
-                    operateDataStore(ConfigurationType.DELETE, null, IidConstants.getNodeGroupPath(telemetryNodeGroup.getNodeId()));
-                }
-            }
+    public void deleteNodeSubscriptionFromDataStore(String nodeId, List<TelemetryNodeSubscription> list) {
+        for (int i = 0; i < list.size(); i++) {
+            operateDataStore(ConfigurationType.DELETE, null, IidConstants.getSubscriptionPath(nodeId,
+                    list.get(i).getSubscriptionName()));
+        }
+    }
+
+    public void deleteNodeSubscriptionSensorFromDataStore(String nodeId, String name,
+                                                          List<TelemetryNodeSubscriptionSensor> list) {
+        for (int i = 0; i < list.size(); i++) {
+            operateDataStore(ConfigurationType.DELETE, null, IidConstants.getSubscriptionSensorPath(
+                    nodeId, name, list.get(i).getSensorGroupId()));
+        }
+    }
+
+    public void deleteNodeSubscriptionDestinationFromDataStore(String nodeId, String name,
+                                                               List<TelemetryNodeSubscriptionDestination> list) {
+        for (int i = 0; i < list.size(); i++) {
+            operateDataStore(ConfigurationType.DELETE, null, IidConstants.getSubscriptionDestinationPath(
+                    nodeId, name, list.get(i).getDestinationGroupId()));
         }
     }
 
